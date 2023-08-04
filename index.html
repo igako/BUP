@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de Distribuição de Pagamento</title>
+    <style>
+        body {
+            background-color: #FFD700;
+            text-align: center;
+            margin-top: 50px;
+            font-size: 1.15em;
+        }
+        h1 {
+            color: white;
+            font-size: 1.15em;
+            margin-bottom: 0;
+        }
+        .valor-pago {
+            background-color: blue;
+        }
+        .professor {
+            background-color: green;
+        }
+        .bup {
+            background-color: red;
+        }
+        input {
+            margin: 0;
+            text-align: center;
+            width: 200px;
+            font-size: 1.15em;
+        }
+        .margin-bottom {
+            margin-bottom: 20px;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            font-style: italic;
+            color: black;
+        }
+        .footer a {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <img src="logo_bup.png" alt="Logo BUP" width="200" height="100">
+    <br>
+    <h1 class="valor-pago">Valor Pago</h1>
+    <input type="number" id="valorPago" class="margin-bottom" placeholder="Valor Pago (R$)">
+    <h1 class="professor">Professor</h1>
+    <input type="number" id="professor" class="margin-bottom" placeholder="Professor (R$)">
+    <h1 class="bup">BUP</h1>
+    <input type="number" id="bup" class="margin-bottom" placeholder="BUP (R$)">
+    <br>
+    <button onclick="calcular()">Calcular</button>
+    <button onclick="limpar()">Limpar</button>
+
+    <div class="footer">
+        <p><a href="https://api.instagram.com/bupidiomas" target="_blank">@bupidiomas</a></p>
+    </div>
+
+    <script>
+        function calcular() {
+            const valorPagoInput = parseFloat(document.getElementById('valorPago').value);
+            const professorInput = parseFloat(document.getElementById('professor').value);
+            const bupInput = parseFloat(document.getElementById('bup').value);
+
+            if (isNaN(valorPagoInput) && isNaN(professorInput) && isNaN(bupInput)) {
+                alert("Preencha pelo menos um dos campos para realizar o cálculo.");
+                return;
+            }
+
+            if (!isNaN(valorPagoInput) && isNaN(professorInput) && isNaN(bupInput)) {
+                const professor = (valorPagoInput * 0.6).toFixed(2);
+                const bup = (valorPagoInput * 0.4).toFixed(2);
+                document.getElementById('professor').value = professor;
+                document.getElementById('bup').value = bup;
+            } else if (isNaN(valorPagoInput) && !isNaN(professorInput) && isNaN(bupInput)) {
+                const valorPago = (professorInput / 0.6).toFixed(2);
+                const bup = (valorPago - professorInput).toFixed(2);
+                document.getElementById('valorPago').value = valorPago;
+                document.getElementById('bup').value = bup;
+            } else if (isNaN(valorPagoInput) && isNaN(professorInput) && !isNaN(bupInput)) {
+                const valorPago = (bupInput / 0.4).toFixed(2);
+                const professor = (valorPago - bupInput).toFixed(2);
+                document.getElementById('valorPago').value = valorPago;
+                document.getElementById('professor').value = professor;
+            }
+        }
+
+        function limpar() {
+            document.getElementById('valorPago').value = "";
+            document.getElementById('professor').value = "";
+            document.getElementById('bup').value = "";
+        }
+    </script>
+</body>
+</html>
