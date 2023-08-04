@@ -2,13 +2,12 @@
 <html>
 <head>
     <title>Calculadora de Distribuição de Pagamento</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             background-color: #FFD700;
             text-align: center;
             margin-top: 50px;
-            font-size: 1em;
+            font-size: 1.15em;
         }
         h1 {
             color: white;
@@ -27,9 +26,8 @@
         input {
             margin: 0;
             text-align: center;
-            width: 100%;
-            max-width: 200px;
-            font-size: 1em;
+            width: 200px;
+            font-size: 1.15em;
         }
         .margin-bottom {
             margin-bottom: 20px;
@@ -48,7 +46,7 @@
     </style>
 </head>
 <body>
-    <img src="logo_bup.png" alt="Logo BUP" width="200" height="100" style="max-width: 100%;">
+    <img src="logo_bup.png" alt="Logo BUP" width="200" height="100">
     <br>
     <h1 class="valor-pago">Valor Pago</h1>
     <input type="number" id="valorPago" class="margin-bottom" placeholder="Valor Pago (R$)">
@@ -65,8 +63,39 @@
     </div>
 
     <script>
-        // Seu código JavaScript permanece inalterado.
-        // ...
+        function calcular() {
+            const valorPagoInput = parseFloat(document.getElementById('valorPago').value);
+            const professorInput = parseFloat(document.getElementById('professor').value);
+            const bupInput = parseFloat(document.getElementById('bup').value);
+
+            if (isNaN(valorPagoInput) && isNaN(professorInput) && isNaN(bupInput)) {
+                alert("Preencha pelo menos um dos campos para realizar o cálculo.");
+                return;
+            }
+
+            if (!isNaN(valorPagoInput) && isNaN(professorInput) && isNaN(bupInput)) {
+                const professor = (valorPagoInput * 0.6).toFixed(2);
+                const bup = (valorPagoInput * 0.4).toFixed(2);
+                document.getElementById('professor').value = professor;
+                document.getElementById('bup').value = bup;
+            } else if (isNaN(valorPagoInput) && !isNaN(professorInput) && isNaN(bupInput)) {
+                const valorPago = (professorInput / 0.6).toFixed(2);
+                const bup = (valorPago - professorInput).toFixed(2);
+                document.getElementById('valorPago').value = valorPago;
+                document.getElementById('bup').value = bup;
+            } else if (isNaN(valorPagoInput) && isNaN(professorInput) && !isNaN(bupInput)) {
+                const valorPago = (bupInput / 0.4).toFixed(2);
+                const professor = (valorPago - bupInput).toFixed(2);
+                document.getElementById('valorPago').value = valorPago;
+                document.getElementById('professor').value = professor;
+            }
+        }
+
+        function limpar() {
+            document.getElementById('valorPago').value = "";
+            document.getElementById('professor').value = "";
+            document.getElementById('bup').value = "";
+        }
     </script>
 </body>
 </html>
